@@ -13,7 +13,7 @@ void key_events(int key, void *param)
 }
 
 void
-draw_empty_rect(mlx_context *mlx, mlx_image *canvas, t_vect2 start, t_size size)
+draw_empty_rect(mlx_context *mlx, mlx_image *canvas, t_vect2 start, t_size size, mlx_color color)
 {
 	if (start.x < 0)
 		start.x = 0;
@@ -25,13 +25,13 @@ draw_empty_rect(mlx_context *mlx, mlx_image *canvas, t_vect2 start, t_size size)
 		{
 			for (int x = 0; x < size.width; ++x)
 			{
-				mlx_set_image_pixel(*mlx, *canvas, x + start.x, y + start.y, (mlx_color){ .rgba = 0x000000FF });
+				mlx_set_image_pixel(*mlx, *canvas, x + start.x, y + start.y, color);
 			}
 		}
 		else
 		{
-				mlx_set_image_pixel(*mlx, *canvas, 0 + start.x, y + start.y, (mlx_color){ .rgba = 0x000000FF });
-				mlx_set_image_pixel(*mlx, *canvas, start.x + size.width - 1, y + start.y, (mlx_color){ .rgba = 0x000000FF });
+				mlx_set_image_pixel(*mlx, *canvas, 0 + start.x, y + start.y, color);
+				mlx_set_image_pixel(*mlx, *canvas, start.x + size.width - 1, y + start.y, color);
 		}
 	}
 }
@@ -47,10 +47,6 @@ void draw_start(mlx_context *mlx, mlx_image *canvas)
 
 void draw_board(mlx_context *mlx, mlx_window *win)
 {
-	/*
-	for ()
-	{}
-	*/
 }
 
 int main(void)
@@ -65,26 +61,27 @@ int main(void)
 
 	mlx_image canvas = mlx_new_image(mlx, 720, 480);
 
+	//CREATE CANVAS WINDOWS, i cant put strings directly on the image, so this thing is helpfull
+    mlx_window_create_info canvas_info = { 0 };
+    canvas_info.title = "Canvas window context";
+    canvas_info.width = 720;
+    canvas_info.height = 480;
+    canvas_info.render_target = canvas;
+    mlx_window canvas_win = mlx_new_window(mlx, &canvas_info);
+	
 	draw_start(&mlx, &canvas);
 	draw_empty_rect(&mlx, &canvas,
-			(t_vect2){.x = 10, .y = 10}, (t_size){.width = 40, .height = 40});
-	//mlx_set_image_rectangle(mlx, canvas, 10, 20, 80, 70, (mlx_color){.rgba = 0x000000FF});
-    /*mlx_window_create_info target_info = { 0 };
-    target_info.render_target = target;
-    mlx_window target_win = mlx_new_window(mlx, &target_info);
-	*/
-    /*for(int i = 0; i < 100; i++)
-    {
-        for(int j = 0; j < 100; j++)
-            mlx_pixel_put(mlx, win, i, j, (mlx_color){ .rgba = 0xFF0000FF });
-    }
-	*/
+			(t_vect2){.x = 10, .y = 10}, (t_size){.width = 80, .height = 40}, (mlx_color){.rgba = 0x000000FF});
+
+	mlx_string_put(mlx, canvas_win, 720/2, 480/2, (mlx_color){.rgba = 0xFFFFFFFF}, "This is a test!!");
 	mlx_put_image_to_window(mlx, win, canvas, 0, 0);
+
 
 	mlx_on_event(mlx, win, MLX_WINDOW_EVENT, window_events, mlx);
 	mlx_on_event(mlx, win, MLX_KEYDOWN, key_events, mlx);
 
     mlx_loop(mlx);
+    mlx_destroy_window(mlx, canvas_win);
 	mlx_destroy_image(mlx, canvas);
     mlx_destroy_window(mlx, win);
     mlx_destroy_context(mlx);
