@@ -1,5 +1,6 @@
 #include <chess.h>
 
+char sound_path[1][128] = {"./res/sounds/cursor.wav"};
 int main(void)
 {
 	t_vars vars = { 0 };
@@ -17,6 +18,9 @@ int main(void)
     vars.win = mlx_new_window(vars.mlx, &info);
 
 	vars.canvas = mlx_new_image(vars.mlx, 720, 480);
+	vars.s_channel = mlx_new_audio_channel(vars.mlx);
+	float sound_duration;
+	vars.sounds[CURSOR_SOUND] = mlx_new_sound_from_wav(vars.mlx, sound_path[0], &sound_duration);
 
 	//CREATE CANVAS WINDOWS, i cant put strings directly on the image, so this thing is helpfull
     mlx_window_create_info canvas_info = { 0 };
@@ -27,14 +31,14 @@ int main(void)
 
     vars.canvas_win = mlx_new_window(vars.mlx, &canvas_info);
 	
-	mlx_clear_window(vars.mlx, vars.win, (mlx_color){ .rgba = 0x000000FF });
-
 	mlx_add_loop_hook(vars.mlx, update, &vars);
 
 	mlx_on_event(vars.mlx, vars.win, MLX_WINDOW_EVENT, window_events, vars.mlx);
 	mlx_on_event(vars.mlx, vars.win, MLX_KEYDOWN, key_events, &vars);
 
     mlx_loop(vars.mlx);
+	mlx_destroy_sound(vars.mlx, vars.sounds[CURSOR_SOUND]);
+	mlx_destroy_audio_channel(vars.mlx, vars.s_channel);
     mlx_destroy_window(vars.mlx, vars.canvas_win);
 	mlx_destroy_image(vars.mlx, vars.canvas);
     mlx_destroy_window(vars.mlx, vars.win);

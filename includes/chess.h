@@ -11,6 +11,11 @@
 #define UNSELECTED 0
 #define SELECTED 1
 
+#define MENU 0
+#define PLAY 1
+#define CURSOR_SOUND 0
+
+extern char sound_path[1][128];
 typedef struct s_menu_selector
 {
 	uint8_t selected_box;
@@ -31,12 +36,14 @@ typedef struct s_size
 
 typedef struct s_vars
 {
+	uint8_t game_state;
+	t_menu_selector menu;
+	mlx_channel s_channel;
+	mlx_sound sounds[2];
 	mlx_context mlx;
 	mlx_window win;
 	mlx_image canvas;
 	mlx_window canvas_win;
-	t_menu_selector menu;
-	uint8_t game_state;
 } t_vars;
 
 void update(void *arg);
