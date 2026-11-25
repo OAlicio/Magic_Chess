@@ -4,7 +4,6 @@ void update(void *arg)
 {
 	t_vars *vars = (t_vars *)arg;
 	mlx_clear_window(vars->mlx, vars->canvas_win, (mlx_color){ .rgba = 0x000000FF });
-	mlx_clear_window(vars->mlx, vars->win, (mlx_color){ .rgba = 0x000000FF });
 
 	if (vars->game_state == 0)
 	{
