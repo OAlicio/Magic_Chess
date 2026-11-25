@@ -24,8 +24,11 @@ int main(void)
     canvas_info.title = NULL;
     canvas_info.width = 720;
     canvas_info.height = 480;
+
     vars.canvas_win = mlx_new_window(vars.mlx, &canvas_info);
 	
+	mlx_clear_window(vars.mlx, vars.win, (mlx_color){ .rgba = 0x000000FF });
+
 	mlx_add_loop_hook(vars.mlx, update, &vars);
 
 	mlx_on_event(vars.mlx, vars.win, MLX_WINDOW_EVENT, window_events, vars.mlx);
