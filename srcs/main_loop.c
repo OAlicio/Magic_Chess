@@ -16,5 +16,9 @@ void update(void *arg)
 		draw_start(&vars->mlx, &vars->canvas_win);
 		draw_menu_widgets(&vars->mlx, &vars->canvas_win, vars);
 	}
+	else if (vars->game_state == PLAY)
+	{
+		draw_board(&vars->mlx, &vars->canvas_win);
+	}
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->canvas, 0, 0);
 }

@@ -32,6 +32,9 @@ void key_events(int key, void *param)
 		{
 			vars->game_state = PLAY;
 		}
+		else if (vars->menu.selected_box == 2 && key == MLX_KEY_ENTER)
+		{
+			mlx_loop_end((mlx_context)vars->mlx);
+		}
 	}
-	printf("selected box %d\n", vars->menu.selected_box);
 }

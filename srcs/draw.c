@@ -32,3 +32,19 @@ draw_empty_rect(mlx_context *mlx, mlx_window *win, t_vect2 start, t_size size, m
 		mlx_string_put(*mlx, *win, text_start.x, text_start.y, (mlx_color){.rgba = 0x000000FF}, text);
 	}
 }
+
+void
+draw_rect(mlx_context *mlx, mlx_window *win, t_vect2 start, t_size size, mlx_color color)
+{
+	if (start.x < 0)
+		start.x = 0;
+	if (start.y < 0)
+		start.y = 0;
+	for (int y = 0; y < size.height; ++y)
+	{
+		for (int x = 0; x < size.width; ++x)
+		{
+			mlx_pixel_put(*mlx, *win, x + start.x, y + start.y, color);
+		}
+	}
+}

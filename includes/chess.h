@@ -11,6 +11,12 @@
 #define UNSELECTED 0
 #define SELECTED 1
 
+#define WHITES 0xFFFFFFFF
+#define BLACKS 0x000000FF
+
+#define WIDTH 720
+#define HEIGHT 480
+
 #define MENU 0
 #define PLAY 1
 #define CURSOR_SOUND 0
@@ -54,5 +60,7 @@ void draw_board(mlx_context *mlx, mlx_window *win);
 void draw_menu_widgets(mlx_context *mlx, mlx_window *win, t_vars *vars);
 void draw_empty_rect(mlx_context *mlx, mlx_window *win, t_vect2 start,
 		t_size size, mlx_color color, char *text, t_vect2 text_offset);
+void draw_rect(mlx_context *mlx, mlx_window *win,
+		t_vect2 start, t_size size, mlx_color color);
 
 #endif
