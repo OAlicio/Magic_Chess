@@ -11,8 +11,11 @@
 #define UNSELECTED 0
 #define SELECTED 1
 
-#define WHITES 0xFFFFFFFF
-#define BLACKS 0x000000FF
+#define WHITES 0xF5F0E6FF
+#define BLACKS 0x343434FF
+
+#define WHITE 0xE8E8E8FF
+#define BLACK 0x555B66FF
 
 #define WIDTH 720
 #define HEIGHT 480
